@@ -12,9 +12,22 @@
           <v-img cover height="200" :src="item.src"></v-img>
           <v-card-item>
             <v-card-title>{{ item.name }}</v-card-title>
-            <h4 class="font-weight-bold">${{ item.price }}</h4>
+            <h4 class="font-weight-bold">{{ $filters.formatCurrencyUSD(item.price) }}</h4>
           </v-card-item>
-          <v-card-actions>
+          <v-card-item class="text-center" v-if="cartItems.find(i => i.id === item.id)">
+            <div class="align-center">
+              <span @click="removeQuantityFromCart(item.id)" style="cursor: pointer;" class="icon  pa-3">
+                <v-icon>mdi-minus</v-icon>
+              </span>
+              <span class="number align-center pa-3">
+                {{ cartItems.find(i => i.id === item.id)?.quantity }}
+              </span>
+              <span @click="addToCart(item)" style="cursor: pointer;" class="icon  pa-3">
+                <v-icon>mdi-plus</v-icon>
+              </span>
+            </div>
+          </v-card-item>
+          <v-card-actions v-else>
             <v-btn color="primary" variant="elevated" block @click="addToCart(item)">
               Order Now
             </v-btn>
@@ -29,9 +42,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useCartStore } from '@/store/cart';
+import { storeToRefs } from 'pinia';
 
 const cartStore = useCartStore();
-const { addToCart } = cartStore;
+const { addToCart, removeQuantityFromCart } = cartStore;
+const { cartItems } = storeToRefs(cartStore);
 
 const items = ref([
   {

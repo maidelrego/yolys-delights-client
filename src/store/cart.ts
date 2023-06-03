@@ -14,7 +14,7 @@ export const useCartStore = defineStore("cart", {
       return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     },
     totalItemsInCart(): number {
-      return this.cartItems.reduce((total, item) => total + item.quantity, 0);
+      return this.cartItems.length
     }
   },
 
@@ -26,7 +26,18 @@ export const useCartStore = defineStore("cart", {
         console.log("existingItem", existingItem.quantity, item.quantity);
         existingItem.quantity ++;
       } else {
-        this.cartItems.push(item);
+        this.cartItems.push({ ...item });
+      }
+    },
+    removeQuantityFromCart(itemId: number) {
+      const item = this.cartItems.find((i) => i.id === itemId);
+
+      if (item) {
+        item.quantity--;
+
+        if (item.quantity === 0) {
+          this.removeFromCart(item.id);
+        }
       }
     },
 
