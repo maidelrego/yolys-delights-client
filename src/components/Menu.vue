@@ -15,7 +15,7 @@
             <h4 class="font-weight-bold">${{ item.price }}</h4>
           </v-card-item>
           <v-card-actions>
-            <v-btn color="primary" variant="elevated" block>
+            <v-btn color="primary" variant="elevated" block @click="addToCart(item)">
               Order Now
             </v-btn>
           </v-card-actions>
@@ -28,31 +28,39 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useCartStore } from '@/store/cart';
+
+const cartStore = useCartStore();
+const { addToCart } = cartStore;
 
 const items = ref([
   {
     id: 1,
     name: 'Flan',
     src: 'https://www.steamycooker.com/wp-content/uploads/2020/08/flan-7-720x405.jpg',
-    price: '5 / each',
+    price: 5.00,
+    quantity: 1
   },
   {
     id: 2,
     name: 'Pastel de Guayaba',
     src: 'https://media-cdn.tripadvisor.com/media/photo-s/0f/2d/f8/1e/pastel-de-guayaba.jpg',
-    price: '3.00 / each',
+    price: 3.00,
+    quantity: 1
   },
   {
     id: 3,
     name: 'Pastel de Coco',
     src: 'https://recetacubana.com/wp-content/uploads/2022/07/pastelitos-cubanos-de-guayaba-y-queso-1-1024x683.jpg',
-    price: '3.00 / each',
+    price: 3.00,
+    quantity: 1
   },
   {
     id: 4,
     name: 'Arroz con Leche',
     src: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F21%2F2018%2F03%2F25%2Frecetas-1092-arroz-con-leche-2000.jpg&q=60',
-    price: '5.00 / each',
+    price: 5.00,
+    quantity: 1
   }
 ])
 </script>
