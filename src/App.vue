@@ -4,7 +4,6 @@
       <v-img src="./assets/img/iconOnly.png" class="ml-2 iconResize" />
       <v-spacer></v-spacer>
       <v-img src="./assets/img/textOnly.png" class="ml-2 textLogoResize" />
-      <!-- <h1 class="text-gradient text-h5 text-md-h4 text-sm-h4 text-lg-h4 font-weight-bold">Yoly's Delights</h1> -->
       <v-spacer></v-spacer>
       <v-btn class="text-none" stacked rounded @click="appStore.toggleDrawer()">
         <v-badge :content="totalItemsInCart">

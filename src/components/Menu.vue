@@ -10,12 +10,29 @@
       <v-col cols="auto" sm="6" md="3" lg="3" v-for="item in items" :key="item.id">
         <v-card class="mx-auto rounded-lg elevation-5" max-width="auto">
           <v-img cover height="200" :src="item.src"></v-img>
+
           <v-card-item>
             <v-card-title class="secondaryFont">{{ item.name }}</v-card-title>
-            <v-rating density="compact" size="small" v-model="rating" color="yellow-darken-3"></v-rating>
-            <h4 class="secondarySubHeader">{{ formatCurrencyUSD(item.price) }}</h4>
           </v-card-item>
-          <v-card-item class="text-center" v-if="cartItems.find(i => i.id === item.id)">
+
+          <v-card-text>
+            <v-row align="center" class="mx-0">
+              <v-rating v-model="item.rating" color="amber" density="compact" half-increments readonly
+                size="small"></v-rating>
+
+              <div class="text-grey ms-4">
+                {{ item.rating }} (413)
+              </div>
+            </v-row>
+            <v-row>
+              <v-col>
+
+                <h3 class="secondarySubHeader">{{ formatCurrencyUSD(item.price) }}</h3>
+              </v-col>
+            </v-row>
+          </v-card-text>
+
+          <v-card-item class="text-center mb-5" v-if="cartItems.find(i => i.id === item.id)">
             <div class="align-center">
               <span @click="removeQuantityFromCart(item.id)" style="cursor: pointer;" class="icon  pa-3">
                 <v-icon>mdi-minus</v-icon>
@@ -49,7 +66,6 @@ import { formatCurrencyUSD } from '@/lib/filters'
 const cartStore = useCartStore()
 const { addToCart, removeQuantityFromCart } = cartStore
 const { cartItems } = storeToRefs(cartStore)
-const rating = ref(4)
 
 const items = ref([
   {
@@ -57,28 +73,32 @@ const items = ref([
     name: 'Flan',
     src: 'https://dadgotthis.com/wp-content/uploads/2020/06/Instant-Pot-Leche-Flan-1-1.jpg',
     price: 5.00,
-    quantity: 1
+    quantity: 1,
+    rating: 4.50
   },
   {
     id: 2,
     name: 'Pastel de Guayaba',
     src: 'https://media-cdn.tripadvisor.com/media/photo-s/0f/2d/f8/1e/pastel-de-guayaba.jpg',
     price: 3.00,
-    quantity: 1
+    quantity: 1,
+    rating: 4.2
   },
   {
     id: 3,
     name: 'Pastel de Coco',
     src: 'https://recetacubana.com/wp-content/uploads/2022/07/pastelitos-cubanos-de-guayaba-y-queso-1-1024x683.jpg',
     price: 3.00,
-    quantity: 1
+    quantity: 1,
+    rating: 4.8
   },
   {
     id: 4,
     name: 'Arroz con Leche',
     src: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F21%2F2018%2F03%2F25%2Frecetas-1092-arroz-con-leche-2000.jpg&q=60',
     price: 5.00,
-    quantity: 1
+    quantity: 1,
+    rating: 3.5
   }
 ])
 </script>

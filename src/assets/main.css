@@ -8,14 +8,6 @@
   background: linear-gradient(-180deg, rgba(255, 206, 103, 0.22) -42.47%, rgba(253, 237, 202, 0) 100%);
 }
 
-/* .text-gradient {
-  background: -o-linear-gradient(-40deg, #fb3c00, #ffb800);
-  background: linear-gradient(-50deg, #fb3c00, #ffb800);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-} */
-
 .primaryFont {
   font-family: 'Suez One';
   font-weight: 200;
@@ -54,7 +46,7 @@
 }
 
 .secondaryHeader {
-  color: #915e20;
+  color: #f17228;
   font-weight: 500;
   font-family: 'Suez One';
 }
@@ -163,7 +155,7 @@
 }
 
 .activeClass {
-  color: #c7893b;
+  color: #f17228;
   background-color: rgba(241, 114, 40, 0.15);
   border-color: transparent;
 }

@@ -87,7 +87,7 @@
             <v-img max-width="300" :src="emptyCart"></v-img>
             <v-col cols="12">
             <p class="secondarySubHeaderCart" style="font-size: 1.6rem;">Your cart is empty</p>
-            <p class="secondarySubHeaderCart mt-5">Looks like you have not added anything to your cart</p>
+            <p class="secondarySubHeaderCart mt-5">Looks like you haven't added anything to your cart.</p>
           </v-col>
           </v-col>
         </v-row>

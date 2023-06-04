@@ -2,18 +2,18 @@
   <section class="mt-16">
     <v-row>
       <v-col cols="12" md="6" order-md="last">
-        <img class="img-fluid" src="https://freepngimg.com/save/170464-fresh-bakery-photos-free-clipart-hq/600x559" alt="hero-header" />
+        <img class="img-fluid" src="https://freepngimg.com/save/170464-fresh-bakery-photos-free-clipart-hq/600x559"
+          alt="hero-header" />
       </v-col>
 
       <v-col cols="12" md="6">
-        <h1 class="mainHeader text-center">Are you starving?</h1>
-        <p class="subheader text-center pa-8">Within a few clicks, find meals that are
-          accessible near you</p>
+        <h1 class="mainHeader text-center">Feeling hungry?</h1>
+        <p class="subheader text-center pa-8">Indulge in our Cuban-inspired delicacies and journey to Havana's vibrant
+          streets.</p>
         <v-card class="rounded-lg mt-12" flat>
           <v-card-text>
-            <v-btn v-for="tab in tabs" :key="tab.id" flat :prepend-icon="tab.iconClass"
-              @click="changeTab(tab.id)" :active="activeTab === tab.id"
-              :class="activeTab === tab.id ? 'activeClass' : ''">
+            <v-btn v-for="tab in tabs" :key="tab.id" flat :prepend-icon="tab.iconClass" @click="changeTab(tab.id)"
+              :active="activeTab === tab.id" :class="activeTab === tab.id ? 'activeClass' : ''">
               {{ tab.label }}
             </v-btn>
             <v-divider class="mt-5 mb-5"></v-divider>
