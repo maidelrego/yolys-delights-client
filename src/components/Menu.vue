@@ -12,7 +12,7 @@
           <v-img cover height="200" :src="item.src"></v-img>
           <v-card-item>
             <v-card-title>{{ item.name }}</v-card-title>
-            <h4 class="font-weight-bold">{{ $filters.formatCurrencyUSD(item.price) }}</h4>
+            <h4 class="font-weight-bold">{{ formatCurrencyUSD(item.price) }}</h4>
           </v-card-item>
           <v-card-item class="text-center" v-if="cartItems.find(i => i.id === item.id)">
             <div class="align-center">
@@ -43,6 +43,7 @@
 import { ref } from 'vue'
 import { useCartStore } from '@/store/cart';
 import { storeToRefs } from 'pinia';
+import { formatCurrencyUSD } from '@/lib/filters';
 
 const cartStore = useCartStore();
 const { addToCart, removeQuantityFromCart } = cartStore;

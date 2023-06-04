@@ -21,7 +21,7 @@
             </v-col>
             <v-col align="right" cols="4">
               <p class="text-subtitle-2">
-                {{ $filters.formatCurrencyUSD(item.price) }}
+                {{ formatCurrencyUSD(item.price) }}
               </p>
             </v-col>
           </v-row>
@@ -56,7 +56,7 @@
           <p>Total Amount</p>
         </v-col>
         <v-col cols="6" align="right">
-          <p>{{ $filters.formatCurrencyUSD(cartTotal) }}</p>
+          <p>{{ formatCurrencyUSD(cartTotal) }}</p>
         </v-col>
       </v-row>
 
@@ -75,10 +75,11 @@
 import { useCartStore } from '@/store/cart';
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
+import { formatCurrencyUSD } from '@/lib/filters';
 
 const appStore = useAppStore();
 const cartStore = useCartStore();
-const { removeFromCart, clearCart, addToCart, removeQuantityFromCart } = cartStore;
+const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore;
 const { cartItems, cartTotal } = storeToRefs(cartStore);
 </script>
 
