@@ -2,7 +2,7 @@
   <section>
     <v-row class="mb-8">
       <v-col cols="12" class="text-center">
-        <h1 class="howDoesItWorkHeader text-h4 mb-3 text-primary">Menu</h1>
+        <h1 class="secondaryHeader">Menu</h1>
       </v-col>
     </v-row>
 
@@ -11,8 +11,9 @@
         <v-card class="mx-auto rounded-lg elevation-5" max-width="auto">
           <v-img cover height="200" :src="item.src"></v-img>
           <v-card-item>
-            <v-card-title>{{ item.name }}</v-card-title>
-            <h4 class="font-weight-bold">{{ formatCurrencyUSD(item.price) }}</h4>
+            <v-card-title class="secondaryFont">{{ item.name }}</v-card-title>
+            <v-rating density="compact" size="small" v-model="rating" color="yellow-darken-3"></v-rating>
+            <h4 class="secondarySubHeader">{{ formatCurrencyUSD(item.price) }}</h4>
           </v-card-item>
           <v-card-item class="text-center" v-if="cartItems.find(i => i.id === item.id)">
             <div class="align-center">
@@ -28,8 +29,8 @@
             </div>
           </v-card-item>
           <v-card-actions v-else>
-            <v-btn color="primary" variant="elevated" block @click="addToCart(item)">
-              Order Now
+            <v-btn color="primary" variant="elevated" prepend-icon="mdi-cart-outline" block @click="addToCart(item)">
+              Add to Cart
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -48,12 +49,13 @@ import { formatCurrencyUSD } from '@/lib/filters'
 const cartStore = useCartStore()
 const { addToCart, removeQuantityFromCart } = cartStore
 const { cartItems } = storeToRefs(cartStore)
+const rating = ref(4)
 
 const items = ref([
   {
     id: 1,
     name: 'Flan',
-    src: 'https://www.steamycooker.com/wp-content/uploads/2020/08/flan-7-720x405.jpg',
+    src: 'https://dadgotthis.com/wp-content/uploads/2020/06/Instant-Pot-Leche-Flan-1-1.jpg',
     price: 5.00,
     quantity: 1
   },

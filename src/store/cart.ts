@@ -14,8 +14,26 @@ export const useCartStore = defineStore("cart", {
       return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     },
     totalItemsInCart(): number {
-      return this.cartItems.length
-    }
+      const uniqueItems = new Map<number, CartItem>();
+
+      this.cartItems.forEach((item) => {
+        const existingItem = uniqueItems.get(item.id);
+
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          uniqueItems.set(item.id, { ...item });
+        }
+      });
+
+      let totalQuantity = 0;
+
+      uniqueItems.forEach((item) => {
+        totalQuantity += item.quantity;
+      });
+
+      return totalQuantity;
+    },
   },
 
   actions: {

@@ -8,19 +8,19 @@
       <v-toolbar-title>Your Cart</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
-      <v-row v-for="item in cartItems" :key="item.id">
+      <v-row v-for="item in cartItems" :key="item.id" no-gutters class="mb-5">
         <v-col cols="4">
           <v-img max-width="150" :src="item.src" class="rounded-lg"></v-img>
         </v-col>
         <v-col cols="8">
           <v-row>
             <v-col cols="8">
-              <p class="ml-3 text-body-1">
+              <p class="ml-3 secondaryFontCart">
                 {{ item.name }}
               </p>
             </v-col>
             <v-col align="right" cols="4">
-              <p class="text-subtitle-2">
+              <p class="secondarySubHeaderCart">
                 {{ formatCurrencyUSD(item.price) }}
               </p>
             </v-col>
@@ -49,23 +49,49 @@
 
       </v-row>
 
-      <v-divider class="mt-8 mb-8"></v-divider>
 
-      <v-row>
-        <v-col cols="6" align="left">
-          <p>Total Amount</p>
-        </v-col>
-        <v-col cols="6" align="right">
-          <p>{{ formatCurrencyUSD(cartTotal) }}</p>
-        </v-col>
-      </v-row>
+      <template v-if="cartIsNotEmpty">
+        <v-divider class="mt-8 mb-8"></v-divider>
 
-      <v-row>
-        <v-col cols="12">
-          <v-btn class="mb-3" color="primary" block variant="elevated">Check Out</v-btn>
-          <v-btn @click="appStore.toggleDrawer()" block variant="outlined">Continue Shopping</v-btn>
-        </v-col>
-      </v-row>
+        <v-row>
+          <!-- ORDER SUMMARY -->
+          <v-col cols="6" align="left">
+            <p class="secondarySubHeaderCart">Order Summary</p>
+          </v-col>
+          <v-col cols="6" align="right">
+            <p class="secondarySubHeaderCart">{{ cartItems.length }} Items</p>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="6" align="left">
+            <p class="secondarySubHeaderCart">Total Amount</p>
+          </v-col>
+          <v-col cols="6" align="right">
+            <p class="secondarySubHeaderTotal">{{ formatCurrencyUSD(cartTotal) }}</p>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12">
+            <v-btn class="mb-3" color="primary" block variant="elevated">Check Out</v-btn>
+            <v-btn @click="appStore.toggleDrawer()" block variant="outlined">Continue Shopping</v-btn>
+          </v-col>
+        </v-row>
+      </template>
+
+      <template v-else>
+        <v-row justify="center">
+          <!-- IMAGE OF EMPTY CART -->
+          <v-col cols="12" align="center">
+            <v-img max-width="300" :src="emptyCart"></v-img>
+            <v-col cols="12">
+            <p class="secondarySubHeaderCart" style="font-size: 1.6rem;">Your cart is empty</p>
+            <p class="secondarySubHeaderCart mt-5">Looks like you have not added anything to your cart</p>
+          </v-col>
+          </v-col>
+        </v-row>
+      </template>
 
     </v-card-text>
   </v-card>
@@ -76,11 +102,16 @@ import { useCartStore } from '@/store/cart'
 import { useAppStore } from '@/store/app'
 import { storeToRefs } from 'pinia'
 import { formatCurrencyUSD } from '@/lib/filters'
+import { computed } from 'vue'
+import emptyCart from '@/assets/img/emptyCart.png'
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
 const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
 const { cartItems, cartTotal } = storeToRefs(cartStore)
+
+const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
+
 </script>
 
 <style scoped></style>

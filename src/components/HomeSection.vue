@@ -6,8 +6,8 @@
       </v-col>
 
       <v-col cols="12" md="6">
-        <h1 class="headers text-h4 text-md-h3 text-sm-h3 text-lg-h2 mb-3">Are you starving?</h1>
-        <p class="subheader text-h5 text-md-h5 text-sm-h4 text-lg-h4 mb-3">Within a few clicks, find meals that are
+        <h1 class="mainHeader text-center">Are you starving?</h1>
+        <p class="subheader text-center pa-8">Within a few clicks, find meals that are
           accessible near you</p>
         <v-card class="rounded-lg mt-12" flat>
           <v-card-text>

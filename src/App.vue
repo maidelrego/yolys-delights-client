@@ -1,13 +1,11 @@
 <template>
   <v-app id="app">
     <v-app-bar app flat top>
-      <v-img src="./assets/img/flag.webp" max-height="50" max-width="50" contain class="ml-2" />
-      <h1 class="text-gradient">cubanToGo</h1>
+      <v-img src="./assets/img/iconOnly.png" class="ml-2 iconResize" />
       <v-spacer></v-spacer>
-      <!-- LOGIN -->
-      <v-btn color="primary" variant="outlined" prepend-icon="mdi-account-outline" class="ml-4">
-        Login
-      </v-btn>
+      <v-img src="./assets/img/textOnly.png" class="ml-2 textLogoResize" />
+      <!-- <h1 class="text-gradient text-h5 text-md-h4 text-sm-h4 text-lg-h4 font-weight-bold">Yoly's Delights</h1> -->
+      <v-spacer></v-spacer>
       <v-btn class="text-none" stacked rounded @click="appStore.toggleDrawer()">
         <v-badge :content="totalItemsInCart">
           <v-icon color="primary" size="x-large">mdi-cart-outline</v-icon>
@@ -48,17 +46,17 @@
 <script setup lang="ts">
 import Cart from './components/Cart.vue'
 import { ref } from 'vue'
-import { useAppStore } from '@/store/app';
-import { storeToRefs } from 'pinia';
-import { useCartStore } from '@/store/cart';
+import { useAppStore } from '@/store/app'
+import { storeToRefs } from 'pinia'
+import { useCartStore } from '@/store/cart'
 
-const cartStore = useCartStore();
-const appStore = useAppStore();
-const { totalItemsInCart } = storeToRefs(cartStore);
+const cartStore = useCartStore()
+const appStore = useAppStore()
+const { totalItemsInCart } = storeToRefs(cartStore)
 const { drawer } = storeToRefs(appStore)
 
 const icons = ref([
   'mdi-facebook',
-  'mdi-instagram',
+  'mdi-instagram'
 ])
 </script>
