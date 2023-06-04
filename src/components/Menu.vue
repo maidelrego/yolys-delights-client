@@ -41,13 +41,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCartStore } from '@/store/cart';
-import { storeToRefs } from 'pinia';
-import { formatCurrencyUSD } from '@/lib/filters';
+import { useCartStore } from '@/store/cart'
+import { storeToRefs } from 'pinia'
+import { formatCurrencyUSD } from '@/lib/filters'
 
-const cartStore = useCartStore();
-const { addToCart, removeQuantityFromCart } = cartStore;
-const { cartItems } = storeToRefs(cartStore);
+const cartStore = useCartStore()
+const { addToCart, removeQuantityFromCart } = cartStore
+const { cartItems } = storeToRefs(cartStore)
 
 const items = ref([
   {

@@ -31,11 +31,11 @@
     </v-row>
   </section>
 </template>
-  
-<script setup lang="ts">
-import { ref } from 'vue';
 
-const activeTab = ref<String>('delivery');
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const activeTab = ref<String>('delivery')
 const tabs = [
   {
     id: 'delivery',
@@ -47,12 +47,11 @@ const tabs = [
     label: 'Pickup',
     iconClass: 'mdi-purse'
   }
-];
+]
 
 const changeTab = (tabId: string) => {
-  console.log(tabId);
-  activeTab.value = tabId;
-};
+  console.log(tabId)
+  activeTab.value = tabId
+}
 </script>
-  
-  
+

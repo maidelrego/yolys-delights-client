@@ -35,11 +35,11 @@ import HowDoesItWork from '@/components/HowDoesItWork.vue';
     </v-row>
   </section>
 </template>
-  
+
 <script setup lang="ts">
 
 </script>
-  
+
 <style scoped>
 
 </style>

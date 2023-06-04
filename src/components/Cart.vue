@@ -72,15 +72,15 @@
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from '@/store/cart';
-import { useAppStore } from '@/store/app';
-import { storeToRefs } from 'pinia';
-import { formatCurrencyUSD } from '@/lib/filters';
+import { useCartStore } from '@/store/cart'
+import { useAppStore } from '@/store/app'
+import { storeToRefs } from 'pinia'
+import { formatCurrencyUSD } from '@/lib/filters'
 
-const appStore = useAppStore();
-const cartStore = useCartStore();
-const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore;
-const { cartItems, cartTotal } = storeToRefs(cartStore);
+const appStore = useAppStore()
+const cartStore = useCartStore()
+const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
+const { cartItems, cartTotal } = storeToRefs(cartStore)
 </script>
 
 <style scoped></style>
