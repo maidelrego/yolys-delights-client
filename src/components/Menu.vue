@@ -32,24 +32,25 @@
             </v-row>
           </v-card-text>
 
-          <v-card-item class="text-center mb-5" v-if="cartItems.find(i => i.id === item.id)">
-            <div class="align-center">
-              <span @click="removeQuantityFromCart(item.id)" style="cursor: pointer;" class="icon  pa-3">
-                <v-icon>mdi-minus</v-icon>
+          <v-card-item class="text-center" v-if="cartItems.find(i => i.id === item.id)">
+            <v-btn block color="primary" variant="elevated" :ripple="false">
+              <span @click="removeQuantityFromCart(item.id)" style="cursor: pointer; font-size: 1rem;" class="pa-3">
+                <v-icon v-if="cartItemQuantity(item.id) > 1">mdi-minus</v-icon>
+                <v-icon v-else>mdi-trash-can-outline</v-icon>
               </span>
-              <span class="number align-center pa-3">
-                {{ cartItems.find(i => i.id === item.id)?.quantity }}
+              <span class="align-center pa-3" style="font-size: 1rem;">
+                {{ cartItemQuantity(item.id) }}
               </span>
-              <span @click="addToCart(item)" style="cursor: pointer;" class="icon  pa-3">
+              <span @click="addToCart(item)" style="cursor: pointer; font-size: 1rem;" class="pa-3">
                 <v-icon>mdi-plus</v-icon>
               </span>
-            </div>
+            </v-btn>
           </v-card-item>
-          <v-card-actions v-else>
+          <v-card-item v-else>
             <v-btn color="primary" variant="elevated" prepend-icon="mdi-cart-outline" block @click="addToCart(item)">
               Add to Cart
             </v-btn>
-          </v-card-actions>
+          </v-card-item>
         </v-card>
       </v-col>
     </v-row>
@@ -66,6 +67,11 @@ import { formatCurrencyUSD } from '@/lib/filters'
 const cartStore = useCartStore()
 const { addToCart, removeQuantityFromCart } = cartStore
 const { cartItems } = storeToRefs(cartStore)
+
+const cartItemQuantity = (id: number) => {
+  const item = cartItems.value.find(i => i.id === id)
+  return item ? item.quantity : 0
+}
 
 const items = ref([
   {
