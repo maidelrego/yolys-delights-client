@@ -16,7 +16,7 @@
           <v-row>
             <v-col cols="8">
               <p class="ml-3 secondaryFontCart">
-                {{ item.name }}
+                {{ item.title }}
               </p>
             </v-col>
             <v-col align="right" cols="4">
@@ -74,7 +74,7 @@
 
         <v-row>
           <v-col cols="12">
-            <v-btn class="mb-3" color="primary" block variant="elevated">Check Out</v-btn>
+            <v-btn class="mb-3" color="primary" block variant="elevated" @click="checkout()">Check Out</v-btn>
             <v-btn @click="appStore.toggleDrawer()" block variant="outlined">Continue Shopping</v-btn>
           </v-col>
         </v-row>
@@ -86,9 +86,9 @@
           <v-col cols="12" align="center">
             <v-img max-width="300" :src="emptyCart"></v-img>
             <v-col cols="12">
-            <p class="secondarySubHeaderCart" style="font-size: 1.6rem;">Your cart is empty</p>
-            <p class="secondarySubHeaderCart mt-5">Looks like you haven't added anything to your cart.</p>
-          </v-col>
+              <p class="secondarySubHeaderCart" style="font-size: 1.6rem;">Your cart is empty</p>
+              <p class="secondarySubHeaderCart mt-5">Looks like you haven't added anything to your cart.</p>
+            </v-col>
           </v-col>
         </v-row>
       </template>
@@ -104,6 +104,9 @@ import { storeToRefs } from 'pinia'
 import { formatCurrencyUSD } from '@/lib/filters'
 import { computed } from 'vue'
 import emptyCart from '@/assets/img/emptyCart.png'
+import { loadStripe } from '@stripe/stripe-js'
+import { makeRequest } from '@/services/api'
+
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
@@ -111,6 +114,38 @@ const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
 const { cartItems, cartTotal } = storeToRefs(cartStore)
 
 const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
+
+const stripePromise = loadStripe(
+  "pk_test_51NFQn9ACYIku6EnuckLMYECNAvMDwAaaBuaLJ2KG05eVfCHoV7e2LE3hatj9VtvWAR9f9iCqsiF1FsJOEQo462p600Cvvdd8aM"
+)
+
+const checkout = async () => {
+  const products = cartItems.value.map(item => {
+    return {
+      id: item.id,
+      title: item.title,
+      quantity: item.quantity,
+      price: item.price
+    }
+  })
+  try {
+    const stripe = await stripePromise
+    const res = await makeRequest.post("/orders", {
+      products
+    })
+
+    if (stripe !== null) {
+      await stripe.redirectToCheckout({
+        sessionId: res.data.stripeSession.id
+      })
+    } else {
+      console.log("Stripe is not available.")
+    }
+
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 </script>
 

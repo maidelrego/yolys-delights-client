@@ -12,7 +12,7 @@
           <v-img cover height="200" :src="item.src"></v-img>
 
           <v-card-item>
-            <v-card-title class="secondaryFont">{{ item.name }}</v-card-title>
+            <v-card-title class="secondaryFont">{{ item.title }}</v-card-title>
           </v-card-item>
 
           <v-card-text>
@@ -70,7 +70,7 @@ const { cartItems } = storeToRefs(cartStore)
 const items = ref([
   {
     id: 1,
-    name: 'Flan',
+    title: 'Flan',
     src: 'https://dadgotthis.com/wp-content/uploads/2020/06/Instant-Pot-Leche-Flan-1-1.jpg',
     price: 5.00,
     quantity: 1,
@@ -78,7 +78,7 @@ const items = ref([
   },
   {
     id: 2,
-    name: 'Pastel de Guayaba',
+    title: 'Pastel de Guayaba',
     src: 'https://media-cdn.tripadvisor.com/media/photo-s/0f/2d/f8/1e/pastel-de-guayaba.jpg',
     price: 3.00,
     quantity: 1,
@@ -86,7 +86,7 @@ const items = ref([
   },
   {
     id: 3,
-    name: 'Pastel de Coco',
+    title: 'Pastel de Coco',
     src: 'https://recetacubana.com/wp-content/uploads/2022/07/pastelitos-cubanos-de-guayaba-y-queso-1-1024x683.jpg',
     price: 3.00,
     quantity: 1,
@@ -94,7 +94,7 @@ const items = ref([
   },
   {
     id: 4,
-    name: 'Arroz con Leche',
+    title: 'Arroz con Leche',
     src: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F21%2F2018%2F03%2F25%2Frecetas-1092-arroz-con-leche-2000.jpg&q=60',
     price: 5.00,
     quantity: 1,
