@@ -3,8 +3,10 @@ import { MenuItem } from "@/interfaces/MenuItem"
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    cartItems: [] as MenuItem[]
+    cartItems: [] as MenuItem[],
+    persist: true
   }),
+  persist: true,
   getters: {
     cartTotal(): number {
       return this.cartItems.reduce(

@@ -117,7 +117,7 @@ const { cartItems, cartTotal } = storeToRefs(cartStore)
 const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
 
 const stripePromise = loadStripe(
-  "pk_test_51NFQn9ACYIku6EnuckLMYECNAvMDwAaaBuaLJ2KG05eVfCHoV7e2LE3hatj9VtvWAR9f9iCqsiF1FsJOEQo462p600Cvvdd8aM"
+  import.meta.env.VITE_STRIPE_TEST_KEY
 )
 
 const checkout = async () => {
