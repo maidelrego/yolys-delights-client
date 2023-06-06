@@ -10,18 +10,18 @@
     <v-card-text>
       <v-row v-for="item in cartItems" :key="item.id" no-gutters class="mb-5">
         <v-col cols="4">
-          <v-img max-width="150" :src="item.src" class="rounded-lg"></v-img>
+          <v-img max-width="150" :src="imgBaseUrl + item.attributes.img.data.attributes.url" class="rounded-lg"></v-img>
         </v-col>
         <v-col cols="8">
           <v-row>
             <v-col cols="8">
               <p class="ml-3 secondaryFontCart">
-                {{ item.title }}
+                {{ item.attributes.title }}
               </p>
             </v-col>
             <v-col align="right" cols="4">
               <p class="secondarySubHeaderCart">
-                {{ formatCurrencyUSD(item.price) }}
+                {{ formatCurrencyUSD(item.attributes.price) }}
               </p>
             </v-col>
           </v-row>
@@ -33,7 +33,7 @@
                     <v-icon>mdi-minus</v-icon>
                   </span>
                   <span class="number d-flex align-center pa-3">
-                    {{ item.quantity }}
+                    {{ item.attributes.quantity }}
                   </span>
                   <span @click="addToCart(item)" style="cursor: pointer;" class="icon d-flex pa-3">
                     <v-icon>mdi-plus</v-icon>
@@ -106,6 +106,7 @@ import { computed } from 'vue'
 import emptyCart from '@/assets/img/emptyCart.png'
 import { loadStripe } from '@stripe/stripe-js'
 import { makeRequest } from '@/services/api'
+import { imgBaseUrl } from '@/services/api'
 
 
 const appStore = useAppStore()
@@ -123,9 +124,9 @@ const checkout = async () => {
   const products = cartItems.value.map(item => {
     return {
       id: item.id,
-      title: item.title,
-      quantity: item.quantity,
-      price: item.price
+      title: item.attributes.title,
+      quantity: item.attributes.quantity,
+      price: item.attributes.price
     }
   })
   try {

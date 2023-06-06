@@ -1,81 +1,79 @@
-// cart.ts
-
-import { defineStore } from "pinia";
-import { CartItem } from "@/interfaces/CartItem";
-
+import { defineStore } from "pinia"
+import { MenuItem } from "@/interfaces/MenuItem"
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    cartItems: [] as CartItem[],
+    cartItems: [] as MenuItem[]
   }),
-
   getters: {
     cartTotal(): number {
-      return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      return this.cartItems.reduce(
+        (total, item) => total + item.attributes.price * item.attributes.quantity,
+        0
+      )
     },
     totalItemsInCart(): number {
-      const uniqueItems = new Map<number, CartItem>();
+      const uniqueItems = new Map<number, MenuItem>()
 
       this.cartItems.forEach((item) => {
-        const existingItem = uniqueItems.get(item.id);
+        const existingItem = uniqueItems.get(item.id)
 
         if (existingItem) {
-          existingItem.quantity += item.quantity;
+          existingItem.attributes.quantity += item.attributes.quantity
         } else {
-          uniqueItems.set(item.id, { ...item });
+          uniqueItems.set(item.id, { ...item })
         }
-      });
+      })
 
-      let totalQuantity = 0;
+      let totalQuantity = 0
 
       uniqueItems.forEach((item) => {
-        totalQuantity += item.quantity;
-      });
+        totalQuantity += item.attributes.quantity
+      })
 
-      return totalQuantity;
-    },
+      return totalQuantity
+    }
   },
-
   actions: {
-    addToCart(item: CartItem) {
-      const existingItem = this.cartItems.find((i) => i.id === item.id);
+    addToCart(item: MenuItem) {
+      const existingItem = this.cartItems.find((i) => i.id === item.id)
 
       if (existingItem) {
-        existingItem.quantity ++;
+        existingItem.attributes.quantity++
       } else {
-        this.cartItems.push({ ...item });
+        this.cartItems.push({ ...item })
       }
     },
     removeQuantityFromCart(itemId: number) {
-      const item = this.cartItems.find((i) => i.id === itemId);
+      const item = this.cartItems.find((i) => i.id === itemId)
 
       if (item) {
-        item.quantity--;
+        item.attributes.quantity--
 
-        if (item.quantity === 0) {
-          this.removeFromCart(item.id);
+        if (item.attributes.quantity === 0) {
+          this.removeFromCart(item.id)
         }
       }
     },
 
     removeFromCart(itemId: number) {
-      const index = this.cartItems.findIndex((item) => item.id === itemId);
+      const index = this.cartItems.findIndex((item) => item.id === itemId)
 
       if (index !== -1) {
-        this.cartItems.splice(index, 1);
+        this.cartItems.splice(index, 1)
       }
     },
 
     updateCartItemQuantity(payload: { itemId: number; quantity: number }) {
-      const item = this.cartItems.find((i) => i.id === payload.itemId);
+      const item = this.cartItems.find((i) => i.id === payload.itemId)
 
       if (item) {
-        item.quantity = payload.quantity;
+        item.attributes.quantity = payload.quantity
       }
     },
 
     clearCart() {
-      this.cartItems = [];
-    },
-  },
-});
+      this.cartItems = []
+    }
+  }
+})
