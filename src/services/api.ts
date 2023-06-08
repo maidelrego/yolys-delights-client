@@ -94,3 +94,22 @@ export function doAPIPost(path: string, params: any) {
       return err.response.data
     })
 }
+
+export function doAPIPut(path: string, params: any) {
+  console.log("doAPIPost", path, params)
+  const url = baseURL + path
+
+  const apicall = axiosInstance.put(
+    url,
+    params,
+    addAuthHeader({ clear: false })
+  )
+  return timeoutWatcher(apicall)
+    .then((data) => {
+      return data
+    })
+    .catch((err) => {
+      console.log(err)
+      return err.response.data
+    })
+}

@@ -21,7 +21,7 @@
               density="compact" color="primary">
               <template v-slot:append>
                 <v-btn block color="primary">
-                  Order
+                  Shop Now
                 </v-btn>
               </template>
             </v-text-field>

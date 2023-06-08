@@ -3,8 +3,7 @@ import { MenuItem } from "@/interfaces/MenuItem"
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    cartItems: [] as MenuItem[],
-    persist: true
+    cartItems: [] as MenuItem[]
   }),
   persist: true,
   getters: {
@@ -43,7 +42,8 @@ export const useCartStore = defineStore("cart", {
       if (existingItem) {
         existingItem.attributes.quantity++
       } else {
-        this.cartItems.push({ ...item })
+        const newItem = { ...item }
+        this.cartItems.push(newItem)
       }
     },
     removeQuantityFromCart(itemId: number) {
@@ -54,6 +54,7 @@ export const useCartStore = defineStore("cart", {
 
         if (item.attributes.quantity === 0) {
           this.removeFromCart(item.id)
+          item.attributes.quantity = 1
         }
       }
     },
