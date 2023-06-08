@@ -3,7 +3,9 @@ import { MenuItem } from "@/interfaces/MenuItem"
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    cartItems: [] as MenuItem[]
+    cartItems: [] as MenuItem[],
+    orderType: "delivery" as "delivery" | "pickup",
+    orderTypeDate: new Date() as Date
   }),
   persist: true,
   getters: {
@@ -36,6 +38,9 @@ export const useCartStore = defineStore("cart", {
     }
   },
   actions: {
+    toggleOrderType() {
+      this.orderType = this.orderType === "delivery" ? "pickup" : "delivery"
+    },
     addToCart(item: MenuItem) {
       const existingItem = this.cartItems.find((i) => i.id === item.id)
 

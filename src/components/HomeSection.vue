@@ -10,48 +10,15 @@
         <h1 class="mainHeader text-center">Feeling hungry?</h1>
         <p class="subheader text-center pa-8">Indulge in our Cuban-inspired delicacies and journey to Havana's vibrant
           streets.</p>
-        <v-card class="rounded-lg mt-12" flat>
-          <v-card-text>
-            <v-btn v-for="tab in tabs" :key="tab.id" flat :prepend-icon="tab.iconClass" @click="changeTab(tab.id)"
-              :active="activeTab === tab.id" :class="activeTab === tab.id ? 'activeClass' : ''">
-              {{ tab.label }}
-            </v-btn>
-            <v-divider class="mt-5 mb-5"></v-divider>
-            <v-text-field label="Enter your Address" prepend-inner-icon="mdi-map-marker" variant="outlined"
-              density="compact" color="primary">
-              <template v-slot:append>
-                <v-btn block color="primary">
-                  Shop Now
-                </v-btn>
-              </template>
-            </v-text-field>
-          </v-card-text>
-        </v-card>
+        <OrderTypeCard />
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import OrderTypeCard from './OrderTypeCard.vue'
 
-const activeTab = ref<String>('delivery')
-const tabs = [
-  {
-    id: 'delivery',
-    label: 'Delivery',
-    iconClass: 'mdi-moped'
-  },
-  {
-    id: 'pickup',
-    label: 'Pickup',
-    iconClass: 'mdi-purse'
-  }
-]
 
-const changeTab = (tabId: string) => {
-  console.log(tabId)
-  activeTab.value = tabId
-}
 </script>
 

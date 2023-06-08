@@ -53,6 +53,8 @@ import { formatCurrencyUSD } from '@/lib/filters'
 import { doAPIPut } from '../services/api'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
+import { sessionIsValid } from '@/lib/helpers'
+
 
 interface OrderItem {
   id: number;
@@ -78,14 +80,27 @@ const goToHome = () => {
   router.push({ name: 'Home' })
 }
 
+const structureAddress = (address: any) => {
+  return `${address.line1} ${address.line2 ? address.line2 : ''} ${address.city}, ${address.state} ${address.postal_code}`
+}
+
 const updateOrder = async () => {
   const { session_id } = route.query
 
-  await doAPIGet(`orders?sort[0]=title:asc&filters[stripeId][$in]=${session_id}&fields[0]=products`).then(async (res) => {
+  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products`).then(async (res) => {
+    const session = await sessionIsValid(route.query.session_id as string)
+
+    const { customer_details } = session
+    const customerAddress = structureAddress(customer_details?.address)
+
     orderItems.value = res.data[0].attributes.products
+
     await doAPIPut(`orders/${res.data[0].id}`, {
       data: {
-        status: 'success'
+        status: 'success',
+        email: customer_details?.email,
+        customerName: customer_details?.name,
+        address: res.data[0].attributes.orderType === 'delivery' ? customerAddress : 'My Address'
       }
     })
   })

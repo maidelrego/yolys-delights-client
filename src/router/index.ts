@@ -1,15 +1,11 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
-import Stripe from 'stripe'
+import { sessionIsValid } from '@/lib/helpers'
 
-const stripe = new Stripe(import.meta.env.VITE_STRIPE_KEY, {
-  apiVersion: '2022-11-15'
-})
-
-async function log({ next, to }: { next: Function, to: any }) {
+async function checkForSession ({ next, to }: { next: Function, to: any }) {
   if (to.query.session_id) {
     try {
-      const verificationSession = await stripe.checkout.sessions.retrieve(to.query.session_id)
+      const verificationSession = await sessionIsValid(to.query.session_id)
       if (verificationSession.payment_status === 'paid') {
         next()
       }
@@ -31,7 +27,7 @@ const routes = [
     path: '/paymentSuccess',
     name: 'PaymentSuccess',
     meta: {
-      middleware: log
+      middleware: checkForSession
     },
     component: () => import('@/views/PaymentSuccess.vue')
   },

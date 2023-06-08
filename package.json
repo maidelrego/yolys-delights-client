@@ -11,6 +11,7 @@
     "@mdi/font": "7.0.96",
     "@stripe/stripe-js": "^1.54.0",
     "@types/stripe-v3": "^3.1.28",
+    "@vuepic/vue-datepicker": "^5.2.0",
     "axios": "^1.4.0",
     "axios-typescript": "^1.0.2",
     "pinia": "^2.0.23",

@@ -75,9 +75,6 @@ export async function doAPIGet(path: string, params?: any) {
 }
 
 export function doAPIPost(path: string, params: any) {
-  if (path === "/") {
-    path = path.slice(1)
-  }
   const url = baseURL + path
 
   const apicall = axiosInstance.post(
@@ -96,7 +93,6 @@ export function doAPIPost(path: string, params: any) {
 }
 
 export function doAPIPut(path: string, params: any) {
-  console.log("doAPIPost", path, params)
   const url = baseURL + path
 
   const apicall = axiosInstance.put(

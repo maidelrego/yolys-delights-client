@@ -17,7 +17,7 @@
     <v-main class="ma-3">
       <router-view />
     </v-main>
-    <v-footer style="height: 10px;" class="bg-footer text-center d-flex flex-column mt-16">
+    <v-footer class="bg-footer text-center d-flex flex-column mt-16">
       <div>
         <v-btn target="_blank" v-for="icon in icons" :key="icon.icon" :href="icon.link" class="mx-4" :icon="icon.icon" variant="text"></v-btn>
       </div>

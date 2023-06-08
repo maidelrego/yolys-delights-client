@@ -46,12 +46,17 @@
             </v-col>
           </v-row>
         </v-col>
-
       </v-row>
 
 
       <template v-if="cartIsNotEmpty">
-        <v-divider class="mt-8 mb-8"></v-divider>
+        <v-divider class="mt-8"></v-divider>
+
+        <v-row>
+          <v-col>
+            <OrderTypeCard :cartMode="true"/>
+          </v-col>
+        </v-row>
 
         <v-row>
           <!-- ORDER SUMMARY -->
@@ -107,12 +112,13 @@ import emptyCart from '@/assets/img/emptyCart.png'
 import { loadStripe } from '@stripe/stripe-js'
 import { makeRequest } from '@/services/api'
 import { imgBaseUrl } from '@/services/api'
+import OrderTypeCard from './OrderTypeCard.vue'
 
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
 const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
-const { cartItems, cartTotal } = storeToRefs(cartStore)
+const { cartItems, cartTotal, orderType, orderTypeDate} = storeToRefs(cartStore)
 
 const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
 
@@ -129,10 +135,17 @@ const checkout = async () => {
       price: item.attributes.price
     }
   })
+
+  let data = {
+    products,
+    orderType: orderType.value,
+    orderTypeDate: orderTypeDate.value
+  }
+
   try {
     const stripe = await stripePromise
     const res = await makeRequest.post("/orders", {
-      products
+      data
     })
 
     if (stripe !== null) {
