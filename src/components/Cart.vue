@@ -10,7 +10,7 @@
     <v-card-text>
       <v-row v-for="item in cartItems" :key="item.id" no-gutters class="mb-5">
         <v-col cols="4">
-          <v-img max-width="150" :src="imgBaseUrl + item.attributes.img.data.attributes.url" class="rounded-lg"></v-img>
+          <v-img max-width="150" :src="item.attributes.img.data.attributes.url" class="rounded-lg"></v-img>
         </v-col>
         <v-col cols="8">
           <v-row>
@@ -111,7 +111,6 @@ import { computed } from 'vue'
 import emptyCart from '@/assets/img/emptyCart.png'
 import { loadStripe } from '@stripe/stripe-js'
 import { makeRequest } from '@/services/api'
-import { imgBaseUrl } from '@/services/api'
 import OrderTypeCard from './OrderTypeCard.vue'
 
 

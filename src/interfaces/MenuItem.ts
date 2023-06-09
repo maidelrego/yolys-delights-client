@@ -2,6 +2,10 @@ export interface MenuItem {
   id: number;
   attributes: Attributes;
 }
+
+export interface Ratings {
+  data: Data[];
+}
 export interface Attributes {
   title: string;
   desc?: null;
@@ -11,6 +15,7 @@ export interface Attributes {
   publishedAt: string;
   rating: number;
   quantity: number;
+  ratings: Ratings;
   img: Img;
 }
 export interface Img {

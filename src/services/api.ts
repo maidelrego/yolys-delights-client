@@ -1,7 +1,7 @@
 import axios from "axios"
 const axiosInstance = axios.create()
 const baseURL = import.meta.env.VITE_ENVIROMENT === "production" ? import.meta.env.VITE_SERVER : import.meta.env.VITE_DEV_SERVER
-export const imgBaseUrl = import.meta.env.VITE_ENVIROMENT === "production" ? import.meta.env.VITE_IMG_URL : import.meta.env.VITE_IMG_TEST_URL
+import { useAppStore } from "@/store/app"
 
 interface IOptions {
   ms?: number;
@@ -50,6 +50,9 @@ export const makeRequest = axios.create({
 })
 
 export async function doAPIGet(path: string, params?: any) {
+  const appStore = useAppStore()
+  appStore.setLoading(true)
+
   if (path[0] === "/") {
     path = path.slice(1)
   }
@@ -67,14 +70,18 @@ export async function doAPIGet(path: string, params?: any) {
 
   try {
     const res = await axiosInstance.get(url, addAuthHeader({ clear: false }))
+    appStore.setLoading(false)
     return res.data
   } catch (err: any) {
     console.log(err)
+    appStore.setLoading(false)
     return err.response.data
   }
 }
 
 export function doAPIPost(path: string, params: any) {
+  const appStore = useAppStore()
+  appStore.setLoading(true)
   const url = baseURL + path
 
   const apicall = axiosInstance.post(
@@ -84,15 +91,19 @@ export function doAPIPost(path: string, params: any) {
   )
   return timeoutWatcher(apicall)
     .then((data) => {
+      appStore.setLoading(false)
       return data
     })
     .catch((err) => {
+      appStore.setLoading(false)
       console.log(err)
       return err.response.data
     })
 }
 
 export function doAPIPut(path: string, params: any) {
+  const appStore = useAppStore()
+  appStore.setLoading(true)
   const url = baseURL + path
 
   const apicall = axiosInstance.put(
@@ -102,9 +113,11 @@ export function doAPIPut(path: string, params: any) {
   )
   return timeoutWatcher(apicall)
     .then((data) => {
+      appStore.setLoading(false)
       return data
     })
     .catch((err) => {
+      appStore.setLoading(false)
       console.log(err)
       return err.response.data
     })

@@ -15,11 +15,15 @@
       <Cart />
     </v-navigation-drawer>
     <v-main class="ma-3">
+      <v-overlay :model-value="loading" class="align-center justify-center">
+        <half-circle-spinner :animation-duration="1000" :size="60" color="#f17228" />
+      </v-overlay>
       <router-view />
     </v-main>
     <v-footer class="bg-footer text-center d-flex flex-column mt-16">
       <div>
-        <v-btn target="_blank" v-for="icon in icons" :key="icon.icon" :href="icon.link" class="mx-4" :icon="icon.icon" variant="text"></v-btn>
+        <v-btn target="_blank" v-for="icon in icons" :key="icon.icon" :href="icon.link" class="mx-4" :icon="icon.icon"
+          variant="text"></v-btn>
       </div>
 
       <div class="pt-0">
@@ -48,11 +52,12 @@ import { ref } from 'vue'
 import { useAppStore } from '@/store/app'
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/store/cart'
+import { HalfCircleSpinner } from 'epic-spinners'
 
 const cartStore = useCartStore()
 const appStore = useAppStore()
 const { totalItemsInCart } = storeToRefs(cartStore)
-const { drawer } = storeToRefs(appStore)
+const { drawer, loading } = storeToRefs(appStore)
 
 const icons = ref(
   [

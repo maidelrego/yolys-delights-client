@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="menu">
     <v-row class="mb-8">
       <v-col cols="12" class="text-center">
         <h1 class="secondaryHeader">Menu</h1>
@@ -9,24 +9,23 @@
     <v-row justify="center">
       <v-col cols="auto" sm="6" md="3" lg="3" v-for="item in menuItems" :key="item.id">
         <v-card class="mx-auto rounded-lg elevation-5" max-width="auto">
-          <v-img cover height="200" :src="imgBaseUrl + item.attributes.img.data.attributes.url"></v-img>
+          <v-img cover height="200" :src="item.attributes.img.data.attributes.url"></v-img>
 
-          <v-card-item>
+          <v-card-item class="mb-1">
             <v-card-title class="secondaryFont">{{ item.attributes.title }}</v-card-title>
           </v-card-item>
 
           <v-card-text>
             <v-row align="center" class="mx-0">
-              <v-rating v-model="item.attributes.rating" color="amber" density="compact" half-increments readonly
-                size="small"></v-rating>
-
-              <div class="text-grey ms-4">
-                {{ item.attributes.rating }} (413)
+              <div class="text-grey mt-1 mr-1">
+                {{ getAverageRating(item.attributes.ratings) }}
               </div>
+              <v-rating :model-value="getAverageRating(item.attributes.ratings)" color="amber" density="compact" half-increments readonly
+                size="small"></v-rating>
+              <Ratings :productId="item.id" :ratings-total="item.attributes.ratings.data.length" />
             </v-row>
             <v-row>
               <v-col>
-
                 <h3 class="secondarySubHeader">{{ formatCurrencyUSD(item.attributes.price) }}</h3>
               </v-col>
             </v-row>
@@ -47,7 +46,8 @@
             </v-btn>
           </v-card-item>
           <v-card-item v-else>
-            <v-btn color="primary" variant="elevated" prepend-icon="mdi-cart-outline" block @click="addToCart(item); appStore.toggleDrawer()">
+            <v-btn color="primary" variant="elevated" prepend-icon="mdi-cart-outline" block
+              @click="addToCart(item); appStore.toggleDrawer()">
               Add to Cart
             </v-btn>
           </v-card-item>
@@ -65,7 +65,7 @@ import { storeToRefs } from 'pinia'
 import { formatCurrencyUSD } from '@/lib/filters'
 import { useAppStore } from '@/store/app'
 import { useMenuStore } from '@/store/menu'
-import { imgBaseUrl } from '@/services/api'
+import Ratings from '@/components/Ratings.vue'
 
 const cartStore = useCartStore()
 const { addToCart, removeQuantityFromCart } = cartStore
@@ -79,11 +79,21 @@ const cartItemQuantity = (id: number) => {
   return item ? item.attributes.quantity : 0
 }
 
+const getAverageRating = (ratings: any) => {
+  if (ratings.data.length === 0) {
+    return 0 // Return 0 if there are no ratings
+  }
+  const totalRating = ratings.data.reduce((sum: number, rating: any) => sum + rating.attributes.ratingValue, 0)
+  const value = totalRating / ratings.data.length
+
+  return value.toFixed(1)
+}
+
 onBeforeMount(async () => {
- await menuStore.getMenuItems()
+  await menuStore.getMenuItems()
 })
 
 
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

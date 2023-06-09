@@ -9,16 +9,11 @@
       <v-card-subtitle class="mb-3">
         We need a day to proccess your order!
       </v-card-subtitle>
-      <VueDatePicker v-model="orderTypeDate" position="center" placeholder="Select Order Date" :enable-time-picker="false"
-        :teleport="true" :min-date="minDates"></VueDatePicker>
-      <!-- <v-text-field label="Enter your Address" prepend-inner-icon="mdi-map-marker" variant="outlined" density="compact"
-        color="primary">
-        <template v-slot:append>
-          <v-btn block color="primary">
-            Shop Now
-          </v-btn>
-        </template>
-      </v-text-field> -->
+      <VueDatePicker v-model="orderTypeDate" position="center" placeholder="Select Order Date"
+        :teleport="true" :is-24="false" :min-date="minDates"></VueDatePicker>
+        <v-btn @click="scrollToSection()" block color="primary" class="mt-5" v-if="!cartMode">
+          Shop Now
+        </v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -59,6 +54,11 @@ const tabs = [
     iconClass: 'mdi-purse'
   }
 ]
+
+const scrollToSection = () => {
+  const el = document.getElementById('menu')
+  el?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <style scoped>

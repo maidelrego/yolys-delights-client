@@ -9,7 +9,8 @@ export const useMenuStore = defineStore("menuStore", {
   getters: {},
   actions: {
     async getMenuItems() {
-      await doAPIGet("products/?populate[img][fields][0]=url").then((res) => {
+      await doAPIGet("products/?populate[img][fields][0]=url&populate[ratings][fields][0]=ratingValue").then((res) => {
+        console.log(res)
         this.menuItems = res.data
       })
     }

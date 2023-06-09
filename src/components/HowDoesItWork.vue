@@ -17,7 +17,7 @@ import HowDoesItWork from '@/components/HowDoesItWork.vue';
       <v-col cols="12" md="3" sm="6">
         <div class="text-center"><img class="shadow-icon" src="../assets/img/order.png" height="80" alt="..." />
           <h3 class="mt-4 primaryFont">Choose order</h3>
-          <p class="mb-3 secondarySubHeader">Check over hundreds of menus to pick your favorite food</p>
+          <p class="mb-3 secondarySubHeader">Select your favorite food by choosing one or several pastries from our menu.</p>
         </div>
       </v-col>
       <v-col cols="12" md="3" sm="6">
