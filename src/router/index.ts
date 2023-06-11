@@ -32,6 +32,11 @@ const routes = [
     component: () => import('@/views/PaymentSuccess.vue')
   },
   {
+    path: '/refund',
+    name: 'Refund',
+    component: () => import('@/views/Refund.vue')
+  },
+  {
     path: '/:pathMatch(.)',
     redirect: () => ({ name: 'Home' })
   }
