@@ -16,25 +16,6 @@
         <VueDatePicker v-model="orderTypeDate" position="center" placeholder="Select Order Date" :teleport="true"
           :is-24="false" :min-date="minDates"></VueDatePicker>
       </template>
-      <!-- whatsapp banner -->
-
-      <!-- <v-banner color="primary" dark>
-      <v-row align="center" justify="center">
-        <v-col cols="12" md="6" lg="4" class="text-center">
-          <v-icon size="64" class="white--text">mdi-whatsapp</v-icon>
-          <h3 class="white--text mt-3">Order by Phone or WhatsApp</h3>
-          <p class="white--text">
-            Our friendly staff is ready to assist you with your order.
-            <br>
-            Call us at: <strong>+1 123-456-7890</strong>
-            <br>
-            Or message us on WhatsApp at: <strong>+1 123-456-7890</strong>
-          </p>
-          <v-btn color="white" dark class="mt-4">Learn More</v-btn>
-        </v-col>
-      </v-row>
-  </v-banner> -->
-
       <v-btn @click="scrollToSection()" block color="primary" class="mt-5" v-if="!cartMode">
         Shop Now
       </v-btn>

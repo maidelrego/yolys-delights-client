@@ -27,20 +27,22 @@
             <td>{{ item.quantity }}</td>
             <td>{{ formatCurrencyUSD(item.price) }}</td>
           </tr>
-          <tr>
-            <td></td>
-            <td class="text-left">
-              <strong>Sub total</strong>
-            </td>
-            <td class="font-weight-bold">{{ formatCurrencyUSD(orderTotal) }}</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="text-left">
-              <strong>Delivery Fee:</strong>
-            </td>
-            <td class="font-weight-bold">{{ formatCurrencyUSD(shipping) }}</td>
-          </tr>
+          <template v-if="orderType === 'delivery'">
+            <tr>
+              <td></td>
+              <td class="text-left">
+                <strong>Sub total</strong>
+              </td>
+              <td class="font-weight-bold">{{ formatCurrencyUSD(orderTotal) }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="text-left">
+                <strong>Delivery Fee:</strong>
+              </td>
+              <td class="font-weight-bold">{{ formatCurrencyUSD(shipping) }}</td>
+            </tr>
+        </template>
           <tr>
             <td></td>
             <td class="text-left">
@@ -70,6 +72,7 @@ import { useCartStore } from '@/store/cart'
 import { sessionIsValid } from '@/lib/helpers'
 const shipping = import.meta.env.VITE_SHIPPING_COST
 
+const orderType = ref('')
 
 interface OrderItem {
   id: number;
@@ -90,6 +93,9 @@ const orderTotal = computed(() => {
 })
 
 const total = computed(() => {
+  if (orderType.value === 'pickup') {
+    return orderTotal.value
+  }
   return Number(orderTotal.value) + Number(shipping)
 })
 
@@ -106,17 +112,18 @@ const structureAddress = (address: any) => {
 const updateOrder = async () => {
   const { session_id } = route.query
 
-  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products&fields[0]=customerName`).then(async (res) => {
+  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products&fields[0]=customerName&fields[0]=orderType`).then(async (res) => {
+    orderType.value = res.data[0].attributes.orderType
     const session = await sessionIsValid(route.query.session_id as string)
-
+    console.log(res)
     const { customer_details } = session
     const customerAddress = structureAddress(customer_details?.address)
 
     orderItems.value = res.data[0].attributes.products
 
-    if (res.data[0].attributes.customerName) {
-      return
-    }
+    // if (res.data[0].attributes.customerName) {
+    //   return
+    // }
 
     await doAPIPut(`orders/${res.data[0].id}`, {
       data: {
