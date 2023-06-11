@@ -11,10 +11,8 @@
         <p class="subheader text-center pa-8">Indulge in our Cuban-inspired delicacies and journey to Havana's vibrant
           streets.</p>
         <v-card class="rounded-lg mt-10" flat>
-          <v-card-title class="blue-grey darken-2 white--text">
-            <h3 class="headline mb-0">Order by Phone or WhatsApp <span><v-icon>mdi-whatsapp</v-icon></span></h3>
-          </v-card-title>
           <v-card-text>
+            <h2 class="headline mb-0">Order by Phone or WhatsApp <v-icon>mdi-whatsapp</v-icon></h2>
             <p>
               Our friendly staff is ready to assist you with your order. Simply give us a call or message us on WhatsApp
               using the provided contact information below.
