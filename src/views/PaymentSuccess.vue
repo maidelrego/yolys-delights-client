@@ -121,9 +121,9 @@ const updateOrder = async () => {
 
     orderItems.value = res.data[0].attributes.products
 
-    // if (res.data[0].attributes.customerName) {
-    //   return
-    // }
+    if (res.data[0].attributes.customerName) {
+      return
+    }
 
     await doAPIPut(`orders/${res.data[0].id}`, {
       data: {
