@@ -15,32 +15,31 @@
       <Cart />
     </v-navigation-drawer>
     <v-main class="ma-3">
-      <v-overlay :model-value="loading" class="align-center justify-center">
+      <v-overlay :model-value="loading" class="align-center justify-center" persistent>
         <half-circle-spinner :animation-duration="1000" :size="60" color="#f17228" />
       </v-overlay>
       <router-view />
     </v-main>
     <v-footer class="bg-footer text-center d-flex flex-column mt-16">
       <div>
-        <v-btn target="_blank" v-for="icon in icons" :key="icon.icon" :href="icon.link" class="mx-4" :icon="icon.icon"
+        <v-btn :color="icon.color" target="_blank" v-for="icon in icons" :key="icon.icon" :href="icon.link" class="mx-4" :icon="icon.icon"
           variant="text"></v-btn>
       </div>
 
       <div class="pt-0">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut
-        risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.
-        Duis
-        commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices,
-        cursus
-        iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque
-        penatibus
-        et magnis dis parturient montes, nascetur ridiculus mus.
+        Thank you for choosing our Cuban pastry online ordering app. We appreciate your trust in us to satisfy your
+        cravings for authentic Cuban pastries. Our dedicated team is here to ensure that you have a delightful and
+        convenient ordering experience.
+        <br />
+        At our app, we take pride in delivering the highest quality Cuban pastries right to your doorstep. Each pastry is
+        carefully handcrafted using traditional techniques and authentic ingredients to bring you the true flavors of
+        Cuba.
       </div>
 
       <v-divider></v-divider>
 
-      <div>
-        {{ new Date().getFullYear() }} — <strong>Maydel Rego</strong>
+      <div class="mt-3">
+        <strong>Yoly's Delights</strong> — {{ new Date().getFullYear() }} — All Rights Reserved
       </div>
     </v-footer>
   </v-app>
@@ -63,11 +62,18 @@ const icons = ref(
   [
     {
       icon: 'mdi-facebook',
-      link: 'https://www.facebook.com/yolyDelights'
+      link: 'https://www.facebook.com/yolyDelights',
+      color: '#3b5998'
     },
     {
       icon: 'mdi-instagram',
-      link: 'https://www.instagram.com/maydelrego'
+      link: 'https://www.instagram.com/maydelrego',
+      color: '#e4405f'
+    },
+    {
+      icon: 'mdi-whatsapp',
+      link: 'https://wa.me/19133706598',
+      color: '#25d366'
     }
   ]
 )

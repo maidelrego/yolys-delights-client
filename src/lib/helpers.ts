@@ -6,6 +6,5 @@ const stripe = new Stripe(import.meta.env.VITE_STRIPE_KEY, {
 
 
 export async function sessionIsValid (sessionId: string) {
-  console.log('sessionIsValid', sessionId)
   return await stripe.checkout.sessions.retrieve(sessionId)
 }

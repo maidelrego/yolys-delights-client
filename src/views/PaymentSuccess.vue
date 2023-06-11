@@ -7,7 +7,7 @@
       </div>
     </v-col>
     <v-col cols="12" sm="8" md="8">
-      <v-table style="background-color: transparent;">
+      <v-table density="comfortable" style="background-color: transparent;">
         <thead>
           <tr>
             <th class="text-left">
@@ -29,10 +29,24 @@
           </tr>
           <tr>
             <td></td>
-            <td class="text-right">
+            <td class="text-left">
+              <strong>Sub total</strong>
+            </td>
+            <td class="font-weight-bold">{{ formatCurrencyUSD(orderTotal) }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-left">
+              <strong>Delivery Fee:</strong>
+            </td>
+            <td class="font-weight-bold">{{ formatCurrencyUSD(shipping) }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-left">
               <strong>Total</strong>
             </td>
-            <td>{{ formatCurrencyUSD(orderTotal) }}</td>
+            <td class="font-weight-bold text-primary">${{ total.toFixed(2) }}</td>
           </tr>
         </tbody>
       </v-table>
@@ -54,6 +68,7 @@ import { doAPIPut } from '../services/api'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 import { sessionIsValid } from '@/lib/helpers'
+const shipping = import.meta.env.VITE_SHIPPING_COST
 
 
 interface OrderItem {
@@ -74,6 +89,10 @@ const orderTotal = computed(() => {
   }, 0)
 })
 
+const total = computed(() => {
+  return Number(orderTotal.value) + Number(shipping)
+})
+
 const router = useRouter()
 
 const goToHome = () => {
@@ -87,7 +106,7 @@ const structureAddress = (address: any) => {
 const updateOrder = async () => {
   const { session_id } = route.query
 
-  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products`).then(async (res) => {
+  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products&fields[0]=customerName`).then(async (res) => {
     const session = await sessionIsValid(route.query.session_id as string)
 
     const { customer_details } = session
@@ -95,17 +114,22 @@ const updateOrder = async () => {
 
     orderItems.value = res.data[0].attributes.products
 
+    if (res.data[0].attributes.customerName) {
+      return
+    }
+
     await doAPIPut(`orders/${res.data[0].id}`, {
       data: {
         status: 'success',
         email: customer_details?.email,
         customerName: customer_details?.name,
-        address: res.data[0].attributes.orderType === 'delivery' ? customerAddress : 'My Address'
+        address: res.data[0].attributes.orderType === 'delivery' ? customerAddress : 'My Address',
+        rawAddress: customer_details?.address
       }
     })
   })
 
-  cartStore.clearCart()
+  cartStore.$reset()
 }
 
 onBeforeMount(async () => {
@@ -113,4 +137,6 @@ onBeforeMount(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

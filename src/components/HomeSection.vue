@@ -10,15 +10,33 @@
         <h1 class="mainHeader text-center">Feeling hungry?</h1>
         <p class="subheader text-center pa-8">Indulge in our Cuban-inspired delicacies and journey to Havana's vibrant
           streets.</p>
-        <OrderTypeCard />
+        <v-card class="rounded-lg mt-10" flat>
+          <v-card-title class="blue-grey darken-2 white--text">
+            <h3 class="headline mb-0">Order by Phone or WhatsApp <span><v-icon>mdi-whatsapp</v-icon></span></h3>
+          </v-card-title>
+          <v-card-text>
+            <p>
+              Our friendly staff is ready to assist you with your order. Simply give us a call or message us on WhatsApp
+              using the provided contact information below.
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary"><strong>(913)-370-6598</strong></v-btn>
+            <v-btn variant="elevated" size="small" @click="scrollToSection()" color="primary">
+              Order Online
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script setup lang="ts">
-import OrderTypeCard from './OrderTypeCard.vue'
 
-
+const scrollToSection = () => {
+  const el = document.getElementById('menu')
+  el?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 

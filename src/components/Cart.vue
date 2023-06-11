@@ -117,7 +117,7 @@ import OrderTypeCard from './OrderTypeCard.vue'
 const appStore = useAppStore()
 const cartStore = useCartStore()
 const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
-const { cartItems, cartTotal, orderType, orderTypeDate} = storeToRefs(cartStore)
+const { cartItems, cartTotal, orderType, orderTypeDate } = storeToRefs(cartStore)
 
 const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
 

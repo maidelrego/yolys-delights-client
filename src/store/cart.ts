@@ -1,11 +1,13 @@
 import { defineStore } from "pinia"
 import { MenuItem } from "@/interfaces/MenuItem"
 
+const today = new Date() // Today
+
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cartItems: [] as MenuItem[],
     orderType: "delivery" as "delivery" | "pickup",
-    orderTypeDate: new Date() as Date
+    orderTypeDate: today.setDate(today.getDate() + 1)
   }),
   persist: true,
   getters: {
@@ -78,10 +80,6 @@ export const useCartStore = defineStore("cart", {
       if (item) {
         item.attributes.quantity = payload.quantity
       }
-    },
-
-    clearCart() {
-      this.cartItems = []
     }
   }
 })
