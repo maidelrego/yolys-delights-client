@@ -12,7 +12,7 @@
           streets.</p>
         <v-card class="rounded-lg mt-10" flat>
           <v-card-text>
-            <h2 class="headline mb-0">Order by Phone or WhatsApp <v-icon>mdi-whatsapp</v-icon></h2>
+            <h2 class="whatsAppFont mb-2">Order by Phone or WhatsApp <v-icon>mdi-whatsapp</v-icon></h2>
             <p>
               Our friendly staff is ready to assist you with your order. Simply give us a call or message us on WhatsApp
               using the provided contact information below.
