@@ -19,7 +19,7 @@
             </p>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary"><strong>(913)-370-6598</strong></v-btn>
+            <v-btn @click="redirectToWhatsapp()" color="primary"><strong>(913)-370-6598</strong></v-btn>
             <v-btn variant="elevated" size="small" @click="scrollToSection()" color="primary">
               Order Online
             </v-btn>
@@ -31,6 +31,10 @@
 </template>
 
 <script setup lang="ts">
+
+const redirectToWhatsapp = () => {
+  window.open('https://wa.me/19133706598', '_blank')
+}
 
 const scrollToSection = () => {
   const el = document.getElementById('menu')
