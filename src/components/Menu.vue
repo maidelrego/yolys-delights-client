@@ -9,7 +9,7 @@
     <v-row justify="center">
       <v-col cols="auto" sm="6" md="3" lg="3" v-for="item in menuItems" :key="item.id">
         <v-card class="mx-auto rounded-lg elevation-5" max-width="auto">
-          <v-img cover height="200" :src="item.attributes.img.data.attributes.url"></v-img>
+          <v-img height="200" width="400" :src="item.attributes.img.data.attributes.url"></v-img>
 
           <v-card-item class="mb-1">
             <v-card-title class="secondaryFont">{{ item.attributes.title }}</v-card-title>
