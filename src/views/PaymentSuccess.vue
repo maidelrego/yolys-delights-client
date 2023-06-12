@@ -112,8 +112,6 @@ const updateOrder = async () => {
 
   await doAPIGet(`orders?fields[0]=customerName&filters[stripeId][$in]=${session_id}&fields[0]=products`).then(async (res) => {
     const session = await sessionIsValid(route.query.session_id as string)
-    console.log(session)
-    console.log(res)
     const { customer_details } = session
     const customerAddress = structureAddress(customer_details?.address)
     const total_details = session.total_details ? session.total_details.amount_shipping : 0
