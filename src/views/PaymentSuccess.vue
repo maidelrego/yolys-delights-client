@@ -92,7 +92,7 @@ const orderTotal = computed(() => {
 
 const total = computed(() => {
   if (deliveryCost.value > 0) {
-    return Number(orderTotal.value) + Number(deliveryCost.value)
+    return Number(orderTotal.value) + Number(deliveryCost.value / 100)
   }
   return orderTotal.value
 })
