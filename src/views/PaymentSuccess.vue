@@ -40,7 +40,7 @@
               <td class="text-left">
                 <strong>Delivery Fee:</strong>
               </td>
-              <td class="font-weight-bold">{{ formatCurrencyUSD(deliveryCost) }}</td>
+              <td class="font-weight-bold">{{ formatCurrencyUSD(deliveryCost / 100) }}</td>
             </tr>
         </template>
           <tr>
