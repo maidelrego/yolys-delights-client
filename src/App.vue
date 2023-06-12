@@ -67,7 +67,7 @@ const icons = ref(
     },
     {
       icon: 'mdi-instagram',
-      link: 'https://www.instagram.com/maydelrego',
+      link: 'https://www.instagram.com/yolyDelights',
       color: '#e4405f'
     },
     {
