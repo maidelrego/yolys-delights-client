@@ -6,7 +6,6 @@ const today = new Date() // Today
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cartItems: [] as MenuItem[],
-    orderType: "delivery" as "delivery" | "pickup",
     orderTypeDate: today.setDate(today.getDate() + 1)
   }),
   persist: true,
@@ -40,9 +39,6 @@ export const useCartStore = defineStore("cart", {
     }
   },
   actions: {
-    toggleOrderType() {
-      this.orderType = this.orderType === "delivery" ? "pickup" : "delivery"
-    },
     addToCart(item: MenuItem) {
       const existingItem = this.cartItems.find((i) => i.id === item.id)
 

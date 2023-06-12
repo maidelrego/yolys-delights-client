@@ -54,7 +54,7 @@
 
         <v-row>
           <v-col>
-            <OrderTypeCard :cartMode="true"/>
+            <OrderTypeCard />
           </v-col>
         </v-row>
 
@@ -117,7 +117,7 @@ import OrderTypeCard from './OrderTypeCard.vue'
 const appStore = useAppStore()
 const cartStore = useCartStore()
 const { removeFromCart, addToCart, removeQuantityFromCart } = cartStore
-const { cartItems, cartTotal, orderType, orderTypeDate } = storeToRefs(cartStore)
+const { cartItems, cartTotal, orderTypeDate } = storeToRefs(cartStore)
 
 const cartIsNotEmpty = computed(() => cartItems.value.length > 0)
 
@@ -137,7 +137,6 @@ const checkout = async () => {
 
   let data = {
     products,
-    orderType: orderType.value,
     orderTypeDate: orderTypeDate.value
   }
 

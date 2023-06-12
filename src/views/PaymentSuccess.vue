@@ -27,7 +27,7 @@
             <td>{{ item.quantity }}</td>
             <td>{{ formatCurrencyUSD(item.price) }}</td>
           </tr>
-          <template v-if="orderType === 'delivery'">
+          <template v-if="deliveryCost > 0">
             <tr>
               <td></td>
               <td class="text-left">
@@ -40,7 +40,7 @@
               <td class="text-left">
                 <strong>Delivery Fee:</strong>
               </td>
-              <td class="font-weight-bold">{{ formatCurrencyUSD(shipping) }}</td>
+              <td class="font-weight-bold">{{ formatCurrencyUSD(deliveryCost) }}</td>
             </tr>
         </template>
           <tr>
@@ -70,9 +70,7 @@ import { doAPIPut } from '../services/api'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 import { sessionIsValid } from '@/lib/helpers'
-const shipping = import.meta.env.VITE_SHIPPING_COST
 
-const orderType = ref('')
 
 interface OrderItem {
   id: number;
@@ -82,7 +80,7 @@ interface OrderItem {
 }
 
 const cartStore = useCartStore()
-
+const deliveryCost = ref(0)
 const route = useRoute()
 let orderItems = ref<OrderItem[]>([])
 
@@ -93,10 +91,10 @@ const orderTotal = computed(() => {
 })
 
 const total = computed(() => {
-  if (orderType.value === 'pickup') {
-    return orderTotal.value
+  if (deliveryCost.value > 0) {
+    return Number(orderTotal.value) + Number(deliveryCost.value)
   }
-  return Number(orderTotal.value) + Number(shipping)
+  return orderTotal.value
 })
 
 const router = useRouter()
@@ -112,13 +110,14 @@ const structureAddress = (address: any) => {
 const updateOrder = async () => {
   const { session_id } = route.query
 
-  await doAPIGet(`orders?fields[0]=orderType&filters[stripeId][$in]=${session_id}&fields[0]=products&fields[0]=customerName&fields[0]=orderType`).then(async (res) => {
-    orderType.value = res.data[0].attributes.orderType
+  await doAPIGet(`orders?fields[0]=customerName&filters[stripeId][$in]=${session_id}&fields[0]=products`).then(async (res) => {
     const session = await sessionIsValid(route.query.session_id as string)
+    console.log(session)
     console.log(res)
     const { customer_details } = session
     const customerAddress = structureAddress(customer_details?.address)
-
+    const total_details = session.total_details ? session.total_details.amount_shipping : 0
+    deliveryCost.value = total_details && total_details > 0 ? total_details : 0
     orderItems.value = res.data[0].attributes.products
 
     if (res.data[0].attributes.customerName) {
@@ -130,8 +129,9 @@ const updateOrder = async () => {
         status: 'success',
         email: customer_details?.email,
         customerName: customer_details?.name,
-        address: res.data[0].attributes.orderType === 'delivery' ? customerAddress : 'My Address',
-        rawAddress: customer_details?.address
+        address: deliveryCost.value > 0 ? customerAddress : 'My Address',
+        rawAddress: customer_details?.address,
+        orderType: deliveryCost.value > 0 ? 'delivery' : 'pickup'
       }
     })
   })
